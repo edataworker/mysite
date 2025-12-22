@@ -263,16 +263,19 @@ section:nth-child(even) {
   display: grid !important;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
   gap: 20px !important;
-  align-items: start;
+  align-items: flex-start;
 }
 
 #testimonialGallery img {
   width: 100% !important;
-  height: auto !important;       /* keep aspect ratio, no force crop */
-  object-fit: contain !important; /* ensure full visibility */
+  height: auto !important;
+  object-fit: contain !important;
+  background: white;
   border-radius: 12px;
   border: 1px solid var(--light-gray);
   box-shadow: var(--shadow);
+  cursor: pointer;
+  padding: 10px;
 }
 
 /* Price Cards */
@@ -434,4 +437,5 @@ footer p {
   section { padding: 60px 0; }
   .card, .price-card { padding: 25px 20px; }
 }
+
 
