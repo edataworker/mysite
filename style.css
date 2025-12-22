@@ -239,11 +239,24 @@ section:nth-child(even) {
   border-bottom: none;
 }
 
-/* Testimonials Section - Updated for Screenshots */
-#testimonials .card {
-  text-align: center;
+/* Testimonials Section */
+.testimonial-card {
+  background: white;
+  border-radius: var(--radius);
   padding: 25px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  text-align: center;
   position: relative;
+  border-top: 4px solid var(--secondary);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-hover);
 }
 
 .testimonial-image {
@@ -262,15 +275,18 @@ section:nth-child(even) {
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   border-radius: var(--radius);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
   border: 2px dashed var(--primary-light);
+  color: var(--gray);
 }
 
 .testimonial-placeholder i {
   font-size: 3rem;
   color: var(--primary-light);
+  margin-bottom: 15px;
 }
 
 .testimonial-text {
@@ -278,6 +294,7 @@ section:nth-child(even) {
   color: var(--gray);
   margin-bottom: 15px;
   line-height: 1.7;
+  flex-grow: 1;
 }
 
 .testimonial-author {
@@ -341,7 +358,7 @@ section:nth-child(even) {
   border-bottom: none;
 }
 
-/* Logo Gallery - UPDATED for proper sizing */
+/* Logo Gallery */
 .logo-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -374,6 +391,8 @@ section:nth-child(even) {
 .logo-image {
   max-width: 100%;
   max-height: 120px;
+  width: auto;
+  height: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
 }
@@ -396,12 +415,7 @@ section:nth-child(even) {
 .logo-placeholder i {
   font-size: 2.5rem;
   color: var(--primary-light);
-}
-
-.logo-placeholder span {
-  color: var(--gray);
-  font-size: 0.9rem;
-  font-weight: normal;
+  margin-bottom: 10px;
 }
 
 /* Contact Form */
@@ -464,6 +478,12 @@ footer {
 footer p {
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
+}
+
+/* Loading State */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 /* Animations */
