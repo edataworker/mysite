@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', async function() {
   document.head.appendChild(fontAwesome);
 
   // Replace these with your actual GitHub username and repository name
-  const owner = 'edataworker'; // e.g., 'eDataWorker'
-  const repo = 'mysite'; // e.g., 'portfolio'
+  const owner = 'edataworker';
+  const repo = 'mysite';
 
   // Function to fetch image list from GitHub API
   async function getImagesFromFolder(folder) {
@@ -210,6 +210,5 @@ document.addEventListener('DOMContentLoaded', async function() {
   setTimeout(() => {
     console.log('eDataWorker Portfolio loaded successfully!');
     console.log('Images are now loaded automatically from GitHub folders.');
-    console.log('Make sure to replace YOUR_GITHUB_USERNAME and YOUR_REPO_NAME with your actual values.');
   }, 1000);
 });
