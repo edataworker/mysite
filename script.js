@@ -1,14 +1,18 @@
-const logoFolder = 'logos/';
-const logoFiles = [
-  "logo1.png",
-  "logo2.png",
-  "logo3.png"
-];
+const username = "YOUR_GITHUB_USERNAME";
+const repo = "YOUR_REPOSITORY_NAME";
+const folder = "logos";
 
 const gallery = document.getElementById("logoGallery");
 
-logoFiles.forEach(file => {
-  let img = document.createElement("img");
-  img.src = logoFolder + file;
-  gallery.appendChild(img);
-});
+fetch(`https://api.github.com/repos/${username}/${repo}/contents/${folder}`)
+  .then(res => res.json())
+  .then(files => {
+    files.forEach(file => {
+      if (file.type === "file" && /\.(png|jpg|jpeg)$/i.test(file.name)) {
+        const img = document.createElement("img");
+        img.src = file.download_url;
+        gallery.appendChild(img);
+      }
+    });
+  })
+  .catch(err => console.error("Error loading logos:", err));
