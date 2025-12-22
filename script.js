@@ -27,3 +27,22 @@ function loadImages(folder, elementId) {
     .catch(err => console.error("Error loading " + folder, err));
 }
 
+// IMAGE POPUP
+const popup = document.getElementById("imgPopup");
+const popupImg = document.getElementById("popupImage");
+const closeBtn = document.querySelector(".popup-close");
+
+document.addEventListener("click", e => {
+  if (e.target.tagName === "IMG" && 
+     (e.target.closest("#logoGallery") || e.target.closest("#testimonialGallery"))) {
+    popup.style.display = "block";
+    popupImg.src = e.target.src;
+  }
+});
+
+closeBtn.onclick = () => popup.style.display = "none";
+popup.onclick = e => {
+  if (e.target === popup) popup.style.display = "none";
+}
+
+
