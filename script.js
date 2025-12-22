@@ -1,4 +1,4 @@
-// Enhanced JavaScript for eDataWorker Portfolio with Dynamic Folder Detection
+// Enhanced JavaScript for eDataWorker Portfolio with Image Loading
 
 document.addEventListener('DOMContentLoaded', function() {
   
@@ -7,6 +7,153 @@ document.addEventListener('DOMContentLoaded', function() {
   fontAwesome.rel = 'stylesheet';
   fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
   document.head.appendChild(fontAwesome);
+  
+  // Simple image loading function
+  function loadImages(imageList, containerId, type = 'logo') {
+    const container = document.getElementById(containerId);
+    if (!container) {
+      console.error(`Container ${containerId} not found`);
+      return;
+    }
+    
+    // Clear loading placeholder
+    container.innerHTML = '';
+    
+    // Check if we have images to load
+    if (!imageList || imageList.length === 0) {
+      // Show placeholder if no images
+      if (type === 'logo') {
+        container.innerHTML = `
+          <div class="logo-item">
+            <div class="logo-placeholder">
+              <i class="fas fa-images"></i>
+              <div>No logos found</div>
+              <small>Add images to /mysite/logo/ folder</small>
+            </div>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="testimonial-card">
+            <div class="testimonial-placeholder">
+              <i class="fas fa-image"></i>
+              <div>No testimonials found</div>
+              <small>Add screenshots to /mysite/testimonial/ folder</small>
+            </div>
+          </div>
+        `;
+      }
+      return;
+    }
+    
+    // Load each image
+    imageList.forEach((image, index) => {
+      if (type === 'logo') {
+        const logoItem = document.createElement('div');
+        logoItem.className = 'logo-item fade-in';
+        logoItem.innerHTML = `
+          <img src="${image.url}" 
+               class="logo-image" 
+               alt="${image.alt || 'Logo ' + (index + 1)}"
+               onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\"logo-placeholder\"><i class=\"fas fa-image\"></i><div>Logo ${index + 1}</div><small>Image not found</small></div>';">
+        `;
+        container.appendChild(logoItem);
+      } else {
+        const testimonialCard = document.createElement('div');
+        testimonialCard.className = 'testimonial-card fade-in';
+        
+        // Use the testimonial data if provided, otherwise use defaults
+        const text = image.text || "Excellent service and quality work.";
+        const author = image.author || "Happy Client";
+        const platform = image.platform || "Platform";
+        
+        testimonialCard.innerHTML = `
+          <img src="${image.url}" 
+               class="testimonial-image" 
+               alt="${image.alt || 'Testimonial ' + (index + 1)}"
+               onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\"testimonial-placeholder\"><i class=\"fas fa-image\"></i><div>Testimonial ${index + 1}</div><small>Screenshot not found</small></div><p class=\"testimonial-text\">\"${text}\"</p><strong class=\"testimonial-author\">- ${author}</strong><small style=\"color: var(--gray); display: block; margin-top: 5px;\">${platform}</small>';">
+          <p class="testimonial-text">"${text}"</p>
+          <strong class="testimonial-author">- ${author}</strong>
+          <small style="color: var(--gray); display: block; margin-top: 5px;">${platform}</small>
+        `;
+        container.appendChild(testimonialCard);
+      }
+    });
+  }
+  
+  // Define your logo images here
+  // Update these with your actual logo image paths
+  const logoImages = [
+    { 
+      url: '/mysite/logo/logo1.png',
+      alt: 'TechCorp Logo'
+    },
+    { 
+      url: '/mysite/logo/logo2.png',
+      alt: 'HealthPlus Logo'
+    },
+    { 
+      url: '/mysite/logo/logo3.png',
+      alt: 'EcoGreen Logo'
+    },
+    { 
+      url: '/mysite/logo/logo4.png',
+      alt: 'FoodHub Logo'
+    },
+    { 
+      url: '/mysite/logo/logo5.png',
+      alt: 'CreativeMind Logo'
+    },
+    { 
+      url: '/mysite/logo/logo6.png',
+      alt: 'SwiftServe Logo'
+    },
+    { 
+      url: '/mysite/logo/logo7.png',
+      alt: 'BuildRight Logo'
+    },
+    { 
+      url: '/mysite/logo/logo8.png',
+      alt: 'EduLearn Logo'
+    }
+  ];
+  
+  // Define your testimonial screenshots here
+  // Update these with your actual testimonial image paths
+  const testimonialImages = [
+    { 
+      url: '/mysite/testimonial/testimonial1.jpg',
+      alt: 'Testimonial from Upwork',
+      text: "Amazing work! Delivered perfectly and on time.",
+      author: "Business Owner",
+      platform: "Upwork"
+    },
+    { 
+      url: '/mysite/testimonial/testimonial2.jpg',
+      alt: 'Testimonial from Freelancer.com',
+      text: "Professional, responsive and highly skilled. Highly recommended!",
+      author: "Startup Founder",
+      platform: "Freelancer.com"
+    },
+    { 
+      url: '/mysite/testimonial/testimonial3.jpg',
+      alt: 'Testimonial from Guru.com',
+      text: "Great communication and excellent quality work.",
+      author: "Freelancer Client",
+      platform: "Guru.com"
+    },
+    { 
+      url: '/mysite/testimonial/testimonial4.jpg',
+      alt: 'Testimonial from Upwork',
+      text: "Exceeded expectations. Will hire again!",
+      author: "Satisfied Client",
+      platform: "Upwork"
+    }
+  ];
+  
+  // Load the images
+  loadImages(logoImages, 'logoGallery', 'logo');
+  loadImages(testimonialImages, 'testimonialGallery', 'testimonial');
   
   // Animate elements on scroll
   const animateOnScroll = () => {
@@ -26,184 +173,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     elements.forEach(el => observer.observe(el));
   };
-  
-  // Function to load images from a folder
-  async function loadImagesFromFolder(folderPath, containerId, type = 'logo') {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    
-    // Show loading state
-    container.classList.add('loading');
-    
-    try {
-      // Get list of image files from the folder
-      // Note: This requires server-side support or a predefined list of images
-      // For GitHub Pages, we'll use a different approach
-      
-      // Create a list of potential image files
-      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
-      const images = [];
-      
-      // For GitHub Pages, we need to know the exact image names
-      // We'll create placeholder images and instructions
-      
-      if (type === 'logo') {
-        // Clear container first
-        container.innerHTML = '';
-        
-        // Create 8 placeholder logos
-        for (let i = 1; i <= 8; i++) {
-          const logoItem = document.createElement('div');
-          logoItem.className = 'logo-item fade-in';
-          logoItem.innerHTML = `
-            <div class="logo-placeholder">
-              <i class="fas fa-palette"></i>
-              <div>Logo ${i}</div>
-              <small>Upload logo${i}.png to /mysite/logo/ folder</small>
-            </div>
-          `;
-          container.appendChild(logoItem);
-        }
-        
-        // Try to load actual logo images
-        for (let i = 1; i <= 8; i++) {
-          const img = new Image();
-          img.src = `/mysite/logo/logo${i}.png`;
-          img.onload = function() {
-            // Replace placeholder with actual image
-            const placeholder = container.children[i-1];
-            if (placeholder) {
-              placeholder.innerHTML = '';
-              const actualImg = document.createElement('img');
-              actualImg.src = `/mysite/logo/logo${i}.png`;
-              actualImg.className = 'logo-image';
-              actualImg.alt = `Logo ${i}`;
-              actualImg.onerror = function() {
-                // If image fails to load, keep placeholder
-                placeholder.innerHTML = `
-                  <div class="logo-placeholder">
-                    <i class="fas fa-palette"></i>
-                    <div>Logo ${i}</div>
-                    <small>Add logo${i}.png to /mysite/logo/</small>
-                  </div>
-                `;
-              };
-              placeholder.appendChild(actualImg);
-            }
-          };
-          img.onerror = function() {
-            // Image doesn't exist, keep placeholder
-            console.log(`Logo ${i} not found in /mysite/logo/ folder`);
-          };
-        }
-        
-        // Instructions
-        console.log('=== LOGO FOLDER SETUP ===');
-        console.log('1. Create a folder named "logo" inside your "mysite" folder');
-        console.log('2. Add your logo images as: logo1.png, logo2.png, logo3.png, etc.');
-        console.log('3. The script will automatically detect and display them');
-        console.log('4. Recommended logo size: 400x400px with transparent background');
-        
-      } else if (type === 'testimonial') {
-        // Clear container first
-        container.innerHTML = '';
-        
-        // Try to load testimonial screenshots
-        const testimonialTexts = [
-          "Amazing work! Delivered perfectly and on time.",
-          "Professional, responsive and highly skilled. Highly recommended!",
-          "Great communication and excellent quality work.",
-          "Exceeded expectations. Will hire again!",
-          "Fast delivery and excellent results.",
-          "Very professional and easy to work with."
-        ];
-        
-        const platforms = ["Upwork", "Freelancer.com", "Guru.com", "Upwork", "Freelancer.com", "Guru.com"];
-        
-        // Create 6 testimonial cards
-        for (let i = 1; i <= 6; i++) {
-          const testimonialCard = document.createElement('div');
-          testimonialCard.className = 'testimonial-card fade-in';
-          
-          testimonialCard.innerHTML = `
-            <div class="testimonial-placeholder" id="testimonial-placeholder-${i}">
-              <i class="fas fa-image"></i>
-              <div>Testimonial ${i}</div>
-              <small>Upload testimonial${i}.jpg to /mysite/testimonial/ folder</small>
-            </div>
-            <p class="testimonial-text">"${testimonialTexts[i-1] || 'Excellent service and quality work.'}"</p>
-            <strong class="testimonial-author">- Happy Client</strong>
-            <small style="color: var(--gray); display: block; margin-top: 5px;">${platforms[i-1] || 'Platform'}</small>
-          `;
-          
-          container.appendChild(testimonialCard);
-          
-          // Try to load actual testimonial image
-          const img = new Image();
-          img.src = `/mysite/testimonial/testimonial${i}.jpg`;
-          img.onload = function() {
-            // Replace placeholder with actual image
-            const placeholder = document.getElementById(`testimonial-placeholder-${i}`);
-            if (placeholder) {
-              placeholder.parentNode.innerHTML = `
-                <img src="/mysite/testimonial/testimonial${i}.jpg" 
-                     class="testimonial-image" 
-                     alt="Testimonial ${i} from ${platforms[i-1] || 'Client'}"
-                     loading="lazy">
-                <p class="testimonial-text">"${testimonialTexts[i-1] || 'Excellent service and quality work.'}"</p>
-                <strong class="testimonial-author">- Happy Client</strong>
-                <small style="color: var(--gray); display: block; margin-top: 5px;">${platforms[i-1] || 'Platform'}</small>
-              `;
-            }
-          };
-          img.onerror = function() {
-            // Image doesn't exist, keep placeholder
-            console.log(`Testimonial ${i} not found in /mysite/testimonial/ folder`);
-          };
-        }
-        
-        // Instructions
-        console.log('=== TESTIMONIAL FOLDER SETUP ===');
-        console.log('1. Create a folder named "testimonial" inside your "mysite" folder');
-        console.log('2. Add your testimonial screenshots as: testimonial1.jpg, testimonial2.jpg, etc.');
-        console.log('3. The script will automatically detect and display them');
-        console.log('4. Recommended size: 800x600px for screenshots');
-      }
-      
-    } catch (error) {
-      console.error(`Error loading ${type} images:`, error);
-      
-      // Show error message
-      const errorMsg = document.createElement('div');
-      errorMsg.className = 'error-message';
-      errorMsg.style.color = 'var(--secondary)';
-      errorMsg.style.textAlign = 'center';
-      errorMsg.style.padding = '20px';
-      errorMsg.innerHTML = `
-        <i class="fas fa-exclamation-triangle"></i>
-        <h3>Unable to load ${type}s</h3>
-        <p>Please create a "${type}" folder inside "mysite" and add your images.</p>
-        <p>Name your images: ${type}1.jpg, ${type}2.jpg, etc.</p>
-      `;
-      container.appendChild(errorMsg);
-    } finally {
-      container.classList.remove('loading');
-    }
-  }
-  
-  // Initialize dynamic image loading
-  loadImagesFromFolder('/mysite/logo/', 'logoGallery', 'logo');
-  
-  // Update testimonials section ID in HTML first, then load testimonials
-  const testimonialsSection = document.getElementById('testimonials') || document.querySelector('section:nth-of-type(5)');
-  if (testimonialsSection) {
-    // Find the grid container inside testimonials
-    const testimonialGrid = testimonialsSection.querySelector('.grid');
-    if (testimonialGrid) {
-      testimonialGrid.id = 'testimonialGallery';
-      loadImagesFromFolder('/mysite/testimonial/', 'testimonialGallery', 'testimonial');
-    }
-  }
   
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -226,31 +195,20 @@ document.addEventListener('DOMContentLoaded', function() {
   const contactForm = document.querySelector('.contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
-      e.preventDefault(); // Prevent actual form submission for now
-      
+      // Allow actual form submission to FormSubmit.co
+      // Just add a visual feedback
       const submitBtn = this.querySelector('button[type="submit"]');
       const originalText = submitBtn.textContent;
-      const originalBg = submitBtn.style.background;
       
       // Change button text to indicate loading
       submitBtn.textContent = 'Sending...';
       submitBtn.disabled = true;
       
-      // Simulate form submission
+      // Re-enable after 5 seconds in case form submission fails
       setTimeout(() => {
-        submitBtn.textContent = 'Message Sent!';
-        submitBtn.style.background = 'var(--success)';
-        
-        // Reset form after success
-        this.reset();
-        
-        // Reset button after 3 seconds
-        setTimeout(() => {
-          submitBtn.textContent = originalText;
-          submitBtn.disabled = false;
-          submitBtn.style.background = originalBg;
-        }, 3000);
-      }, 2000);
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }, 5000);
     });
   }
   
@@ -295,29 +253,23 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(typeWriter, 1000);
   }
   
-  // Function to manually refresh galleries
-  window.refreshGalleries = function() {
-    loadImagesFromFolder('/mysite/logo/', 'logoGallery', 'logo');
-    loadImagesFromFolder('/mysite/testimonial/', 'testimonialGallery', 'testimonial');
-    console.log('Galleries refreshed. Check console for setup instructions.');
+  // Function to easily update image paths
+  window.updateImagePaths = function() {
+    console.log('=== HOW TO ADD YOUR IMAGES ===');
+    console.log('1. Create folders: /mysite/logo/ and /mysite/testimonial/');
+    console.log('2. Upload your logo images as: logo1.png, logo2.png, etc.');
+    console.log('3. Upload testimonial screenshots as: testimonial1.jpg, testimonial2.jpg, etc.');
+    console.log('4. Update the image paths in the JavaScript file (script.js)');
+    console.log('5. Reload the page to see your images');
+    
+    // Show current image configuration
+    console.log('\nCurrent logo images:', logoImages);
+    console.log('Current testimonial images:', testimonialImages);
   };
   
-  // Add refresh button for debugging (visible only in development)
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    const refreshBtn = document.createElement('button');
-    refreshBtn.textContent = '🔄 Refresh Galleries';
-    refreshBtn.style.position = 'fixed';
-    refreshBtn.style.bottom = '20px';
-    refreshBtn.style.right = '20px';
-    refreshBtn.style.zIndex = '1000';
-    refreshBtn.style.padding = '10px 15px';
-    refreshBtn.style.background = 'var(--primary)';
-    refreshBtn.style.color = 'white';
-    refreshBtn.style.border = 'none';
-    refreshBtn.style.borderRadius = '5px';
-    refreshBtn.style.cursor = 'pointer';
-    refreshBtn.style.fontSize = '12px';
-    refreshBtn.onclick = window.refreshGalleries;
-    document.body.appendChild(refreshBtn);
-  }
+  // Run this to see instructions
+  setTimeout(() => {
+    console.log('eDataWorker Portfolio loaded successfully!');
+    console.log('Type updateImagePaths() in console for setup instructions.');
+  }, 1000);
 });
