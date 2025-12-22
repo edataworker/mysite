@@ -186,12 +186,19 @@
 <!-- CONTACT FORM -->
 <section id="contact" class="container">
   <h2>Contact Me</h2>
-  <form action="https://formsubmit.co/edataworker@gmail.cm" method="POST" class="contact-form">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-    <button type="submit">Send Message</button>
-  </form>
+  <form action="https://formsubmit.co/edataworker@gmail.com" method="POST" class="contact-form">
+  <input type="text" name="name" placeholder="Your Name" required>
+  <input type="email" name="email" placeholder="Your Email" required>
+  <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+  <!-- Stop bots -->
+  <input type="text" name="_honey" style="display:none">
+  <!-- No captcha (optional) -->
+  <input type="hidden" name="_captcha" value="false">
+  <!-- Redirect after success -->
+  <input type="hidden" name="_next" value="https://edataworker.github.io/mysite/thankyou.html">
+  <button type="submit">Send Message</button>
+</form>
+
 </section>
 
 <footer>
@@ -202,6 +209,7 @@
 </body>
 
 </html>
+
 
 
 
