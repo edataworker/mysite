@@ -312,6 +312,95 @@ section:nth-child(even) {
   padding: 10px;
 }
 
+/* ==========================================================================
+   Blog & Article Specific Styles
+   ========================================================================== */
+
+.blog-post {
+    max-width: 850px; /* Optimal reading width */
+    margin: -50px auto 50px; /* Pulls the post up over the header gradient */
+    background: white;
+    padding: 50px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 10;
+}
+
+.blog-content {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #444;
+}
+
+.blog-content h2 {
+    text-align: left;
+    margin: 2.5rem 0 1.2rem;
+    font-size: 2rem;
+    color: var(--primary-dark);
+}
+
+.blog-content h2::after {
+    left: 0;
+    transform: none; /* Align underline to the left for blog style */
+    width: 50px;
+}
+
+.blog-content p {
+    margin-bottom: 1.5rem;
+}
+
+/* Enhanced Blog Images */
+.blog-image-container {
+    margin: 40px -50px; /* Makes images slightly wider than text */
+    text-align: center;
+}
+
+.blog-image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.blog-image-container figcaption {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: var(--gray);
+    font-style: italic;
+}
+
+/* Post Meta Info */
+.post-header-meta {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--light-gray);
+    color: var(--gray);
+}
+
+.blog-conclusion {
+    margin-top: 50px;
+    padding: 40px;
+    background: var(--light);
+    border-radius: var(--radius);
+    border-left: 6px solid var(--primary);
+}
+
+/* Responsive Blog */
+@media (max-width: 768px) {
+    .blog-post {
+        margin: -30px 15px 30px;
+        padding: 30px 20px;
+    }
+    .blog-image-container {
+        margin: 30px 0;
+    }
+    .blog-content h2 {
+        font-size: 1.6rem;
+    }
+}
+
 /* Price Cards */
 .price-card {
   background: white;
@@ -471,6 +560,7 @@ footer p {
   section { padding: 60px 0; }
   .card, .price-card { padding: 25px 20px; }
 }
+
 
 
 
